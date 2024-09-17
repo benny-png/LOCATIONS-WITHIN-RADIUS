@@ -1,7 +1,7 @@
 # crud.py
 from sqlalchemy.orm import Session
-from models.models import RestaurantDB
-from schemas.schemas import RestaurantBase
+from .models.models import RestaurantDB
+from .schemas.schemas import RestaurantBase
 
 def get_restaurant(db: Session, name: str):
     return db.query(RestaurantDB).filter(RestaurantDB.name == name).first()

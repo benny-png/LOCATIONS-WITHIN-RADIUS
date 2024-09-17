@@ -12,6 +12,9 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
+
 # Create a non-privileged user that the app will run under.
 ARG UID=10001
 RUN adduser \
@@ -29,11 +32,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the source code into the container.
 COPY . .
 
-# Create the directory for the SQLite database
-RUN mkdir -p /app/data && chown -R appuser:appuser /app/data
-
-# Change ownership of the application directory to appuser
-RUN chown -R appuser:appuser /app
+# Create the data directory and set permissions
+RUN mkdir -p /app/data && chown -R appuser:appuser /app && chmod -R 755 /app
 
 # Switch to the non-privileged user to run the application.
 USER appuser
@@ -42,4 +42,4 @@ USER appuser
 EXPOSE 8000
 
 # Run the application.
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

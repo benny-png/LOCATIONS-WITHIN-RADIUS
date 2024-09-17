@@ -15,6 +15,10 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+@router.get("/")
+def read_root():
+    return {"message": "Welcome to this georadius map!"}
 
 @router.post("/restaurants/", response_model=schemas.Restaurant)
 def add_restaurant(restaurant: schemas.RestaurantBase, db: Session = Depends(get_db)):
