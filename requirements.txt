@@ -2,3 +2,4 @@ geopy
 fastapi
 uvicorn
 sqlalchemy
+jinja2
