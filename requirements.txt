@@ -1,1 +1,4 @@
 geopy
+fastapi
+uvicorn
+sqlalchemy
